@@ -14,51 +14,24 @@
         password: "{{ vcenter_password }}"
         validate_certs: no
         folder: /ansiblevms
-        #name: "{{ vm_name }}"
-        name: serv003.labs.corp
-        #guest_id: serv003.labs.corp
         state: poweredon
-        template: rhel7-v02
+        guest_id: rhel7_64Guest
+    # This is hostname of particular ESXi server on which user wants VM to be deployed
+        esxi_hostname: esx01.labs.corp
         disk:
         - size_gb: 15
           type: thin
           datastore: datastore1
         hardware:
-          memory_mb: 2024
-          num_cpus: 1
-          num_cpu_cores_per_socket: 1
+          memory_mb: 512
+          num_cpus: 2
           scsi: paravirtual
-          memory_reservation_lock: True
-          #mem_limit: 8096
-          #mem_reservation: 4096
-          #cpu_limit: 8096
-          #cpu_reservation: 4096
-          #max_connections: 5
-          hotadd_cpu: True
-          hotremove_cpu: True
-          hotadd_memory: False
-          #version: 14 # Hardware version of virtual machine
-          boot_firmware: "efi"
-       # cdrom:
-       #   type: iso
-       #   iso_path: "[datastore1] livecd.iso"
         networks:
-        - name: VM Network 
-          ip: 192.168.0.30
-          netmask: 255.255.255.0
-          gateway: 192.168.0.10
+        - name: VM Network
           mac: aa:bb:dd:aa:00:14
-          domain: labs.corp
-          #start_connected: yes
-          #wake_on_lan: yes
-          dns_servers:
-          - 192.168.0.200
-        customization:
-          dns_servers:
-          - 192.168.100.10
-          - 192.168.101.10
-        domain : labs.corp
-        hostname: tasktask
+          ip: 192.168.0.51
+          netmask: 255.255.255.0
+          device_type: vmxnet3
         wait_for_ip_address: yes
-     #delegate_to: localhost
-     #register: deploy
+     delegate_to: localhost
+     register: deploy_vm      
