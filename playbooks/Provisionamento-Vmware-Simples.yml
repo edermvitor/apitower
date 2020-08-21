@@ -16,7 +16,7 @@
         folder: /ansiblevms
         #name: "{{ vm_name }}"
         name: serv003.labs.corp
-        guest_id: serv003.labs.corp
+        #guest_id: serv003.labs.corp
         state: poweredon
         template: rhel7-v02
         disk:
