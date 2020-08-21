@@ -15,7 +15,8 @@
         validate_certs: no
         folder: /ansiblevms
         #name: "{{ vm_name }}"
-        name: elvis.labs.corp
+        name: serv003.labs.corp
+        guest_id: serv003.labs.corp
         state: poweredon
         template: t-rhel7-v03
         disk:
@@ -48,10 +49,16 @@
           gateway: 192.168.0.10
           mac: aa:bb:dd:aa:00:14
           domain: labs.corp
-          start_connected: yes
-          wake_on_lan: yes
+          #start_connected: yes
+          #wake_on_lan: yes
           dns_servers:
           - 192.168.0.200
+        customization:
+          dns_servers:
+          - 192.168.100.10
+          - 192.168.101.10
+        domain : labs.corp
+        hostname: tasktask
         wait_for_ip_address: yes
-     delegate_to: localhost
-     register: deploy
+     #delegate_to: localhost
+     #register: deploy
