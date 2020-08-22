@@ -19,6 +19,7 @@
        rhsm_repository:
          name: '*'
          state: disabled
+       ignore_errors: true
 
      - name: Enable repository rhel-7-server-rpms
        rhsm_repository:
