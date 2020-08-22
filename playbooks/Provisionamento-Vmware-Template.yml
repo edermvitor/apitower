@@ -16,8 +16,8 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "gorda3.labs.corp"
-        template: "t-rhel7"
+        name: "gorda4.labs.corp"
+        template: "t-rhel78"
 
         
     # This is hostname of particular ESXi server on which user wants VM to be deployed
