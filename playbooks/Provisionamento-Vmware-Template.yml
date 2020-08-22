@@ -45,7 +45,7 @@
    - name: Debug 
      debug: 
         msg: 
-        - Saida dos deployment  '{{ deployvm }}'       
+        - Saida dos deployment  '{{ deploy_vm }}'       
 
 # openvm tools instalado 
 # perl instalado 
