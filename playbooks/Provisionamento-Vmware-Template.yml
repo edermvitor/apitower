@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "gorda4.labs.corp"
+        name: "gorda5.labs.corp"
         template: "t-rhel78"
 
         
@@ -33,11 +33,22 @@
         networks:
         - name: "VM Network"
           #mac: aa:bb:dd:aa:00:14
-          ip: "192.168.0.51"
+          ip: "192.168.0.52"
           netmask: "255.255.255.0"
           device_type: "vmxnet3"
           start_connected: yes
           wake_on_lan: yes
         wait_for_ip_address: yes
      delegate_to: "localhost"
-     register: "deploy_vm"      
+     register: "deploy_vm"   
+
+   - name: Debug 
+     debug: 
+        msg: 
+        - Saida dos deployment  '{{ deployvm }}'       
+
+# openvm tools instalado 
+# perl instalado 
+# versao do rhel 7.8 atualziada nao ultima sub release
+# vsphsre 6.7 
+# parametros passado STRING 
