@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "gorda5.labs.corp"
+        name: "gorda6.labs.corp"
         template: "t-rhel78"
 
         
