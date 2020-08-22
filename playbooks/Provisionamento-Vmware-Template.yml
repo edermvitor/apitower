@@ -14,10 +14,10 @@
         password: "{{ vcenter_password }}"
         validate_certs: no
         folder: /ansiblevms
-        state: poweredon
+        state: present
         guest_id: rhel7_64Guest
-        name: gorda.labs.corp
-        template: t-rhel7-v03-vmtools
+        name: gorda2.labs.corp
+        template: rhel7-v02
 
         
     # This is hostname of particular ESXi server on which user wants VM to be deployed
@@ -36,6 +36,8 @@
           ip: 192.168.0.51
           netmask: 255.255.255.0
           device_type: vmxnet3
+          start_connected: yes
+          wake_on_lan: yes
         wait_for_ip_address: yes
      delegate_to: localhost
      register: deploy_vm      
