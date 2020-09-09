@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "gorda6.labs.corp"
+        name: "teste-debug.labs.corp"
         template: "t-rhel78"
 
         
@@ -45,7 +45,33 @@
    - name: Debug 
      debug: 
         msg: 
-        - Saida dos deployment  '{{ deploy_vm }}'       
+        - Saida dos deployment  '{{ deploy_vm }}'  
+
+   - name: debug info 
+     debug: 
+        msg: 
+        - saida1 '{{instance.hw_name}}'
+        - saida2 '{{instance.ipv4}}'  
+
+   - name: teste varaibela 
+     set_stats: 
+         data: 
+             nome_da_vm: "{{instance.hw_name}}"
+             ip_da_vm: "{{instance.ipv4}}"
+         per_host: yes 
+#
+#  - name: Add new instance to host group
+#    add_host: hostname={{ item.public_ip }} groupname=launched
+#    with_items: "{{ ec2.instances }}"
+
+#  - name: Wait for SSH to come up
+#    wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+#    with_items: "{{ ec2.instances }}"
+    
+#  - name: Set variable for instance IP
+#    set_fact:
+#      instance_ip: "{{ item.public_ip }}"
+#    with_items: "{{ ec2.instances }}"      
 
 # openvm tools instalado 
 # perl instalado 
