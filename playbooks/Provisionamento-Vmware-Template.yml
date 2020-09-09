@@ -59,9 +59,14 @@
      debug: 
         msg: 
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
-        - saida2 direta "{{deploy_vm.instance.ipv4}}"
-        - saida3 direta "{{deploy_vm.hw_name}}"  
-        - saida4 direta "{{deploy_vm.ipv4}}"
+     ignore_errors: true 
+
+   - name: leitura de variavel direta 
+     debug: 
+        msg: 
+        - saida2 direta  "{{deploy_vm.hw_name}}" 
+     ignore_errors: true 
+
 
    - name: set stats 
      set_stats: 
