@@ -50,13 +50,15 @@
    - name: debug info 
      debug: 
         msg: 
-        - saida1 '{{instance.hw_name}}'
-        - saida2 '{{instance.ipv4}}'  
+        - saida1 '{{item.hw_name}}'
+        - saida2 '{{item.ipv4}}' 
+     with_items:
+        - "{{ deply_vm.instance }}" 
 
    - name: teste varaibela 
      set_stats: 
          data: 
-             nome_da_vm: "{{instance.hw_name}}"
+             nome_da_vm: "{{instance.hw_name}}" 
              ip_da_vm: "{{instance.ipv4}}"
          per_host: yes 
 #
