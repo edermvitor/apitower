@@ -53,7 +53,7 @@
         - saida1 '{{item.hw_name}}'
         - saida2 '{{item.ipv4}}' 
      with_items:
-        - "{{ deply_vm.instance }}" 
+        - "{{ deploy_vm.instance }}" 
 
    - name: teste varaibela 
      set_stats: 
