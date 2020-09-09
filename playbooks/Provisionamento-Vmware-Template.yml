@@ -47,7 +47,7 @@
         msg: 
         - Saida dos deployment  '{{ deploy_vm }}'  
 
-   - name: debug info 
+   - name: debug info + leitura via loop 
      debug: 
         msg: 
         - saida1 '{{item.hw_name}}'
@@ -55,11 +55,19 @@
      with_items:
         - "{{ deploy_vm.instance }}" 
 
-   - name: teste varaibela 
+   - name: leitura de variavel direta 
+     debug: 
+        msg: 
+        - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
+        - saida2 direta "{{deploy_vm.instance.ipv4}}"
+        - saida3 direta "{{deploy_vm.hw_name}}"  
+        - saida4 direta "{{deploy_vm.ipv4}}"
+
+   - name: set stats 
      set_stats: 
          data: 
-             nome_da_vm: "{{instance.hw_name}}" 
-             ip_da_vm: "{{instance.ipv4}}"
+             nome_da_vm: "{{deploy_vm.hw_name}}" 
+             ip_da_vm: "{{deploy_vm.ipv4}}"
          per_host: yes 
 #
 #  - name: Add new instance to host group
