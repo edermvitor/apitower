@@ -55,13 +55,13 @@
      with_items:
         - "{{ deploy_vm.instance }}" 
 
-   - name: leitura de variavel direta 
+   - name: leitura de variavel direta - 1 ok
      debug: 
         msg: 
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
 
-   - name: leitura de variavel direta 
+   - name: leitura de variavel direta - 2
      debug: 
         msg: 
         - saida2 direta  "{{deploy_vm.hw_name}}" 
@@ -71,9 +71,15 @@
    - name: set stats 
      set_stats: 
          data: 
-             nome_da_vm: "{{deploy_vm.hw_name}}" 
-             ip_da_vm: "{{deploy_vm.ipv4}}"
+          2_nome_da_vm: "{{deploy_vm.instance.hw_name}}" 
          per_host: yes 
+     register: "2_nome_da_vm" 
+
+   - name: debug-2 
+     debug: 
+        msg: 
+        - saida especial teste "{{ 2_nome_da_vm }}"
+     
 #
 #  - name: Add new instance to host group
 #    add_host: hostname={{ item.public_ip }} groupname=launched
