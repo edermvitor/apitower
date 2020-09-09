@@ -61,11 +61,7 @@
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
 
-   - name: leitura de variavel direta - 2
-     debug: 
-        msg: 
-        - saida2 direta  "{{deploy_vm.hw_name}}" 
-     ignore_errors: true 
+
 
 
    - name: set stats 
@@ -75,10 +71,20 @@
         per_host: yes 
      register: 2_nome_da_vm
 
-   - name: debug-2 
-     debug: 
-        msg: 
-        - saida especial teste "{{ 2_nome_da_vm }}"
+# Second, reconfigure 
+- hosts: deploy_vm.instance.ipv4 
+  gather_facts: true 
+  connection: smart 
+  become: true 
+
+  tasks: 
+
+    - name: Teste configure 
+      yum: 
+        name: httpd 
+        state: present 
+      ignore_errors: true   
+     
      
 #
 #  - name: Add new instance to host group
