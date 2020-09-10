@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "teste-debug.labs.corp"
+        name: "teste-02-debug.labs.corp"
         template: "t-rhel78"
 
         
@@ -33,8 +33,13 @@
         networks:
         - name: "VM Network"
           #mac: aa:bb:dd:aa:00:14
-          ip: "192.168.0.52"
+          ip: "192.168.0.51"
           netmask: "255.255.255.0"
+          gateway: "192.168.0.10"
+          domain: "labs.corp"
+          dns_servers: 
+          - 192.168.0.220
+          - 8.8.8.8
           device_type: "vmxnet3"
           start_connected: yes
           wake_on_lan: yes
@@ -62,7 +67,7 @@
      ignore_errors: true 
 
    - name: Add new instance to host group
-     add_host: hostname={{ deploy_vm.instance.ipv4 }}  groupname=betina
+     add_host: hostname={{ deploy_vm.instance.ipv4 }}  groupname=marrone
      with_items: "{{ deploy_vm.instance }}"
 
 #inventoryname=provisionamento
@@ -87,7 +92,7 @@
 
 # Second, reconfigure 
 - name: Second play execute all process to subscription Red Hat  
-  hosts: betina
+  hosts: marrone
   gather_facts: true 
   connection: smart 
   become: true 
@@ -116,7 +121,7 @@
 
 # Third play configura httpd service 
 - name: Third play configure httpd service and  Firewall policies
-  hosts: betina
+  hosts: marrone
   gather_facts: true 
   connection: smart 
   become: true 
