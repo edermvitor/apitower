@@ -93,12 +93,35 @@
 
   tasks: 
 
-    - name: Teste configure 
+    - name: Subscreve servidor 
+      include_tasks: Subscreve-RHEL7.yml 
+
+    - name: Instala pacotes Base 
       yum: 
-        name: httpd 
-        state: present 
+        name: "{{ item }}" 
+        state: present
+      with_items:  
+         -  bind-utils
+         -  net-tools  
       ignore_errors: true   
-     
+
+# Third play configura httpd service 
+- hosts: betina
+  gather_facts: true 
+  connection: smart 
+  become: true 
+
+
+  tasks:
+
+     - name: Instala server application 
+       include_tasks: Camada-Application.yml
+
+     - name: configura firewall 
+       include_tasks: irewall-Servico.yml
+
+     - name: configura servidor de aplicacao  
+       include_tasks: Camada-Configuracao.yml
      
 #
 #  - name: Add new instance to host group
