@@ -62,7 +62,7 @@
      ignore_errors: true 
 
    - name: Add new instance to host group
-     add_host: hostname={{ deploy_vm.instance.ipv4 }} groupname=betina
+     add_host: hostname={{ deploy_vm.instance.ipv4 }} inventoryname=provisionamento groupname=betina
      with_items: "{{ deploy_vm.instance }}"
 
    - name: Wait for SSH to come up
