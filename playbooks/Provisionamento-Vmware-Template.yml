@@ -140,7 +140,7 @@
          state: started
          enabled: yes 
 
-    - name: configuracao de firewall padrao Caixa 
+    - name: configuracao de firewall - dois servicos 
       firewalld:
          port: "{{ item }}"
          permanent: true
