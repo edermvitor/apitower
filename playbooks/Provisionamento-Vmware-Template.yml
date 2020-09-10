@@ -37,13 +37,15 @@
           netmask: "255.255.255.0"
           gateway: "192.168.0.10"
           domain: "labs.corp"
-          dns_servers: 
-          - 192.168.0.220
-          - 8.8.8.8
+          dns_servers: "192.168.0.220"
           device_type: "vmxnet3"
           start_connected: yes
           wake_on_lan: yes
         wait_for_ip_address: yes
+        customization: 
+          autologon: yes
+          dns_servers: "192.168.0.220"
+          domain: "labs.corp"
      delegate_to: "localhost"
      register: "deploy_vm"   
 
