@@ -118,7 +118,7 @@
        include_tasks: Camada-Application.yml
 
      - name: configura firewall 
-       include_tasks: irewall-Servico.yml
+       include_tasks: Firewall-Servico.yml
 
      - name: configura servidor de aplicacao  
        include_tasks: Camada-Configuracao.yml
