@@ -61,18 +61,29 @@
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
 
+   - name: Add new instance to host group
+     add_host: hostname={{ deploy_vm.instance.ipv4 }} groupname=betina
+     with_items: "{{ deploy_vm.instance }}"
+
+   - name: Wait for SSH to come up
+     wait_for: host={{ deploy_vm.instance.ipv4 }} port=22 delay=60 timeout=320 state=started
+     with_items: "{{ deploy_vm.instance }}"
+    
+#  - name: Set variable for instance IP
+#    set_fact:
+#      instance_ip: "{{ item.public_ip }}"
+#    with_items: "{{ ec2.instances }}" 
 
 
-
-   - name: set stats 
-     set_stats: 
-       data: 
-        2_nome_da_vm: "{{deploy_vm.instance.hw_name}}" 
-        per_host: yes 
-     register: 2_nome_da_vm
+ #  - name: set stats 
+ #    set_stats: 
+ #      data: 
+ #       2_nome_da_vm: "{{deploy_vm.instance.hw_name}}" 
+ #       per_host: yes 
+ #    register: 2_nome_da_vm
 
 # Second, reconfigure 
-- hosts: deploy_vm.instance.ipv4 
+- hosts: betina
   gather_facts: true 
   connection: smart 
   become: true 
