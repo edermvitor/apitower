@@ -93,17 +93,25 @@
 
   tasks: 
 
-    - name: Subscreve servidor 
-      include_tasks: Subscreve-RHEL7.yml 
+     - name: Registro usando usuario e senha no RHSM 
+       redhat_subscription:
+          state: present
+          username: "{{ user_nome }}"
+          password: "{{ user_senha }}"
+          auto_attach: true
+          pool_ids:
+            - 8a85f98260c27fc50160c32cc4365ccb 
+            
+     - name: Disable all RHSM repositories
+       rhsm_repository:
+         name: '*'
+         state: disabled
+       ignore_errors: true
 
-    - name: Instala pacotes Base 
-      yum: 
-        name: "{{ item }}" 
-        state: present
-      with_items:  
-         -  bind-utils
-         -  net-tools  
-      ignore_errors: true   
+     - name: Enable repository rhel-7-server-rpms
+       rhsm_repository:
+         name: rhel-7-server-rpms
+  
 
 # Third play configura httpd service 
 - hosts: betina
