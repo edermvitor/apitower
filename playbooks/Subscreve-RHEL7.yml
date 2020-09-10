@@ -1,6 +1,6 @@
 ---
 -
-   name: instalacao camada de server application 
+   name: Registra RHSM  
    hosts: all 
    tasks: 
 
