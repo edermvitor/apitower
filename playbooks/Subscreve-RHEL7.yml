@@ -2,6 +2,9 @@
 -
    name: Registra RHSM  
    hosts: all 
+   vars: 
+      user_nome: brolivei@redhat.com
+      user_senha: RedBoo%10x
    tasks: 
 
      - name: Registro usando usuario e senha no RHSM 

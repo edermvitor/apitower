@@ -1,0 +1,139 @@
+---
+-
+   name: Play Um VM Um  
+   hosts: localhost 
+   vars: 
+
+   tasks: 
+
+   - name: Create a virtual machine from a template - teste-d01-debug.labs.corp
+     vmware_guest:
+        datacenter: "DTC01"
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        folder: /ansiblevms
+        state: present
+        guest_id: "rhel7_64Guest"
+        name: "teste-d01-debug.labs.corp"
+        template: "t-rhel78"
+
+        
+    # This is hostname of particular ESXi server on which user wants VM to be deployed
+        esxi_hostname: esx01.labs.corp
+        disk:
+        - size_gb: 15
+          type: thin
+          datastore: datastore1
+        hardware:
+          memory_mb: 512
+          num_cpus: 2
+          scsi: paravirtual
+        networks:
+        - name: "VM Network"
+          #mac: aa:bb:dd:aa:00:14
+          ip: "192.168.0.55"
+          netmask: "255.255.255.0"
+          gateway: "192.168.0.10"
+          domain: "labs.corp"
+          dns_servers: "192.168.0.220"
+          device_type: "vmxnet3"
+          start_connected: yes
+          wake_on_lan: yes
+        wait_for_ip_address: yes
+        customization: 
+          autologon: yes
+          dns_servers: "192.168.0.220"
+          domain: "labs.corp"
+     delegate_to: "localhost"
+     register: "deploy_vm"   
+
+   - name: Debug 
+     debug: 
+        msg: 
+        - Saida dos deployment  '{{ deploy_vm }}'  
+
+   - name: debug info + leitura via loop 
+     debug: 
+        msg: 
+        - saida1 '{{item.hw_name}}'
+        - saida2 '{{item.ipv4}}' 
+     with_items:
+        - "{{ deploy_vm.instance }}" 
+
+   - name: leitura de variavel direta - 1 ok
+     debug: 
+        msg: 
+        - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
+     ignore_errors: true 
+-
+ name: Play Dois VM Dois  
+ hosts: localhost 
+ vars: 
+
+   tasks: 
+   - name: Create a virtual machine from a template - teste-d02-debug.labs.corp
+     vmware_guest:
+        datacenter: "DTC01"
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        folder: /ansiblevms
+        state: present
+        guest_id: "rhel7_64Guest"
+        name: "teste-d02-debug.labs.corp"
+        template: "t-rhel78"
+
+        
+    # This is hostname of particular ESXi server on which user wants VM to be deployed
+        esxi_hostname: esx01.labs.corp
+        disk:
+        - size_gb: 15
+          type: thin
+          datastore: datastore1
+        hardware:
+          memory_mb: 512
+          num_cpus: 2
+          scsi: paravirtual
+        networks:
+        - name: "VM Network"
+          #mac: aa:bb:dd:aa:00:14
+          ip: "192.168.0.56"
+          netmask: "255.255.255.0"
+          gateway: "192.168.0.10"
+          domain: "labs.corp"
+          dns_servers: "192.168.0.220"
+          device_type: "vmxnet3"
+          start_connected: yes
+          wake_on_lan: yes
+        wait_for_ip_address: yes
+        customization: 
+          autologon: yes
+          dns_servers: "192.168.0.220"
+          domain: "labs.corp"
+     delegate_to: "localhost"
+     register: "deploy_vm"   
+
+   - name: Debug 
+     debug: 
+        msg: 
+        - Saida dos deployment  '{{ deploy_vm }}'  
+
+   - name: debug info + leitura via loop 
+     debug: 
+        msg: 
+        - saida1 '{{item.hw_name}}'
+        - saida2 '{{item.ipv4}}' 
+     with_items:
+        - "{{ deploy_vm.instance }}" 
+
+   - name: leitura de variavel direta - 1 ok
+     debug: 
+        msg: 
+        - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
+     ignore_errors: true 
+
+
+  
