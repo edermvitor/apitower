@@ -48,6 +48,9 @@
           domain: "labs.corp"
      delegate_to: "localhost"
      register: "deploy_vm"   
+     async: 0
+     poll: 0
+
 
    - name: Debug 
      debug: 
@@ -110,7 +113,9 @@
           dns_servers: "192.168.0.220"
           domain: "labs.corp"
      delegate_to: "localhost"
-     register: "deploy_vm"   
+     register: "deploy_vm"  
+     async: 0
+     poll: 0 
 
    - name: Debug 
      debug: 
