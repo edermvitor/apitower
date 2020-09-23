@@ -68,11 +68,11 @@
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
 -
+ hosts: localhost
  name: Play Dois VM Dois  
- hosts: localhost 
  vars: 
 
-   tasks: 
+ tasks: 
    - name: Create a virtual machine from a template - teste-d02-debug.labs.corp
      vmware_guest:
         datacenter: "DTC01"
