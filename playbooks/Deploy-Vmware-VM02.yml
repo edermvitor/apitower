@@ -1,5 +1,5 @@
 
-  ---
+---
 -
    name: Teste modo 03 -  Deploy uma VM Vmware Debug02 VM 02 
    hosts: localhost 
