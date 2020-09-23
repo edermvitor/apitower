@@ -2,6 +2,7 @@
 -
    name: Play Um VM Um  
    hosts: localhost 
+   serial: 3
    vars: 
 
    tasks: 
@@ -69,7 +70,8 @@
      ignore_errors: true 
 -
  hosts: localhost
- name: Play Dois VM Dois  
+ name: Play Dois VM Dois 
+ serial: 3 
  vars: 
 
  tasks: 
