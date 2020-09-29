@@ -73,8 +73,7 @@
    - name: seta status 
      set_stats:
        data:
-         vmware_instances: 
-          - '{{ item.ipv4 }}'
+         vmware_instances: '{{ item.ipv4 }}'
        per_host: yes  
      with_items: 
         -  '{{ deploy_vm.instance }}' 
