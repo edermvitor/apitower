@@ -75,6 +75,8 @@
        data:
          vmware_instances: "{{ item.ipv4 }}"
        per_host: no  
+     with_items: "{{ deploy_vm.instance }}"
+     ignore_errors: true 
 
    - name: Add new instance to host group
      add_host: hostname={{ item.ipv4 }} groupname=invtemp
