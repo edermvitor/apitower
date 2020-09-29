@@ -6,7 +6,7 @@
    vars: 
 
    tasks: 
-   - name: Create a virtual machine from a template - {{vm_nome}}
+   - name: Create a virtual machine from a template 
      vmware_guest:
         datacenter: "DTC01"
         hostname: "{{ vcenter_hostname }}"
@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "vm_prov002mode.labs.corp"
+        name: "vm_debug_002.labs.corp"
         template: "t-rhel78"
 
         

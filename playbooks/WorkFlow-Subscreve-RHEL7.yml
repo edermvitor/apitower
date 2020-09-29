@@ -27,6 +27,7 @@
 - name: PLAY 02 
   hosts: linux_launched
   gather_facts: True
+   
 
   tasks: 
 
