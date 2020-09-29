@@ -1,7 +1,7 @@
 
 ---
 -
-   name: Deploy VMware MOdo 03
+   name: Deploy VMware Modo 03
    hosts: localhost 
    vars: 
 
@@ -16,7 +16,7 @@
         folder: /ansiblevms
         state: present
         guest_id: "rhel7_64Guest"
-        name: "{{vm_nome}}"
+        name: "vm_prov002mode.labs.corp"
         template: "t-rhel78"
 
         
@@ -33,7 +33,7 @@
         networks:
         - name: "VM Network"
           #mac: aa:bb:dd:aa:00:14
-          ip: "{{vm_ip}}"
+          ip: "192.168.0.199"
           netmask: "255.255.255.0"
           gateway: "192.168.0.10"
           domain: "labs.corp"
@@ -69,6 +69,12 @@
         msg: 
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
+
+   - name: seta status 
+     set_stats:
+       data:
+         vmware_instances: "{{ deploy_vm.instance }}"
+       per_host: no  
 
 
   

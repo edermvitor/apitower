@@ -1,32 +1,45 @@
 ---
 -
    name: Registra RHSM  
-   hosts: all 
+   hosts: localhost 
    vars: 
       user_nome: brolivei@redhat.com
-      user_senha: RedBoo%10x
+      user_senha: 
    tasks: 
 
-     - name: Registro usando usuario e senha no RHSM 
-       redhat_subscription:
-          state: present
-          username: "{{ user_nome }}"
-          password: "{{ user_senha }}"
-          auto_attach: true
-          pool_ids:
+    - name: Add new instance to host group
+      add_host: hostname={{ item.ipv4 }} groupname=linux_launched
+      with_items: "{{ vmware_instances }}"
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ item.ipv4 }} port=22 delay=60 timeout=320 state=started
+      with_items: "{{ vmware_instances }}"
+      
+      - name: Installing and Configuring Ticket Monster Java App
+      hosts: linux_launched
+      gather_facts: True
+      become: yes
+      become_method: sudo
+  
+- name: Registro usando usuario e senha no RHSM 
+  redhat_subscription:
+         state: present
+         username: "{{ user_nome }}"
+         password: "{{ user_senha }}"
+         auto_attach: true
+         pool_ids:
             - 8a85f98260c27fc50160c32cc4365ccb 
 
      
 
-     - name: Disable all RHSM repositories
-       rhsm_repository:
-         name: '*'
-         state: disabled
+- name: Disable all RHSM repositories
+  rhsm_repository:
+       name: '*'
+       state: disabled
        ignore_errors: true
 
-     - name: Enable repository rhel-7-server-rpms
-       rhsm_repository:
-         name: rhel-7-server-rpms
+- name: Enable repository rhel-7-server-rpms
+  rhsm_repository:
+        name: rhel-7-server-rpms
       
 
-     
