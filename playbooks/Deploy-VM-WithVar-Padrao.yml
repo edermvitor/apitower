@@ -73,14 +73,19 @@
    - name: seta status 
      set_stats:
        data:
-         vmware_instances: "{{ item.ipv4 }}"
-       per_host: no  
-     with_items: "{{ deploy_vm.instance }}"
+         vmware_instances: 
+          - '{{ item.ipv4 }}'
+       per_host: yes  
+     with_items: 
+        -  '{{ deploy_vm.instance }}' 
      ignore_errors: true 
 
    - name: Add new instance to host group
-     add_host: hostname={{ item.ipv4 }} groupname=invtemp
-     with_items: "{{ deploy_vm.instance }}"
+     add_host: 
+        hostname: '{{ item.ipv4 }}' 
+        groups: invtemp
+     with_items:
+        - "{{ deploy_vm.instance }}"
 
  #  - name: Wait for SSH to come up
  #    wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
