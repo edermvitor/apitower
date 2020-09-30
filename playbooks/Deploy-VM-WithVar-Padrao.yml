@@ -70,14 +70,15 @@
         - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
      ignore_errors: true 
 
-  # - name: seta status 
-  #   set_stats:
-  #     data:
-  #       vmware_instances: '{{ item.ipv4 }}'
-  #     per_host: yes  
-  #   with_items: 
-  #      -  '{{ deploy_vm.instance }}' 
-  #   ignore_errors: true 
+   - name: seta status 
+     set_stats:
+       data:
+         vmware_instances: 
+              - '{{ item.ipv4 }}'
+       per_host: yes  
+     with_items: 
+        -  '{{ deploy_vm.instance }}' 
+     ignore_errors: true 
 
    - name: Set fact for subsequent job templates
      set_stats:
