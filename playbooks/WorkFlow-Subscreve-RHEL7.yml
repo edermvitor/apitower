@@ -37,8 +37,8 @@
     - name: Registro usando usuario e senha no RHSM 
       redhat_subscription:
              state: present
-             username: "{{ user_nome }}"
-             password: "{{ user_senha }}"
+             username: "{{user_nome}}"
+             password: "{{user_senha}}"
              auto_attach: true
              pool_ids:
                  - 8a85f98260c27fc50160c32cc4365ccb 
