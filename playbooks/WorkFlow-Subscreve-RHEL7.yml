@@ -7,10 +7,10 @@
       #user_senha: 
    tasks: 
 
- #   - name: Add new instance to host group
- #     add_host: 
- #         hostname:  "{{ip_vmware_instances}}" 
- #         groupname: linux_launched
+    - name: Add new instance to host group
+      add_host: 
+          hostname:  "{{ip_vmware_instances}}" 
+          groupname: linux_launched
  
          
 
@@ -27,12 +27,12 @@
 
      
 
-#- name: PLAY 02 
-#  hosts: linux_launched
-#  gather_facts: True
+- name: PLAY 02 
+  hosts: linux_launched
+  gather_facts: True
    
 
-#  tasks: 
+  tasks: 
 
     - name: Registro usando usuario e senha no RHSM 
       redhat_subscription:
