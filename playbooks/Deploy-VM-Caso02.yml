@@ -1,0 +1,107 @@
+
+---
+-
+   name: Deploy VMware Modo 03
+   hosts: localhost 
+   vars: 
+
+   tasks: 
+   - name: Create a virtual machine from a template 
+     vmware_guest:
+        datacenter: "DTC01"
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        folder: /ansiblevms
+        state: present
+        guest_id: "rhel7_64Guest"
+        name: "vm_caso02.labs.corp"
+        template: "t-rhel78"
+
+        
+    # This is hostname of particular ESXi server on which user wants VM to be deployed
+        esxi_hostname: esx01.labs.corp
+        disk:
+        - size_gb: 15
+          type: thin
+          datastore: datastore1
+        hardware:
+          memory_mb: 512
+          num_cpus: 2
+          scsi: paravirtual
+        networks:
+        - name: "VM Network"
+          #mac: aa:bb:dd:aa:00:14
+          ip: "192.168.0.199"
+          netmask: "255.255.255.0"
+          gateway: "192.168.0.10"
+          domain: "labs.corp"
+          dns_servers: "192.168.0.220"
+          device_type: "vmxnet3"
+          start_connected: yes
+          wake_on_lan: yes
+        wait_for_ip_address: yes
+        customization: 
+          autologon: yes
+          dns_servers: "192.168.0.220"
+          domain: "labs.corp"
+     delegate_to: "localhost"
+     register: "deploy_vm"  
+     async: 0
+     poll: 0 
+
+   - name: Debug 
+     debug: 
+        msg: 
+        - Saida dos deployment  '{{ deploy_vm }}'  
+
+   - name: debug info + leitura via loop 
+     debug: 
+        msg: 
+        - saida1 '{{item.hw_name}}'
+        - saida2 '{{item.ipv4}}' 
+     with_items:
+        - "{{ deploy_vm.instance }}" 
+
+   - name: leitura de variavel direta - 1 ok
+     debug: 
+        msg: 
+        - saida1 direta  "{{deploy_vm.instance.ipv4}}" 
+     ignore_errors: true 
+
+   - name: set var ipv4 
+     set_stats:
+      data: 
+        ip_vmware_instances: "{{deploy_vm.instance.ipv4}}"
+     ignore_errors: true
+
+  # - name: seta status 
+  #   set_stats:
+  #     data:
+  #       vmware_instances: 
+  #            - '{{ item.ipv4 }}'
+  #     per_host: yes  
+  #   with_items: 
+  #      -  '{{ deploy_vm.instance }}' 
+  #   ignore_errors: true 
+
+   - name: Set fact for subsequent job templates
+     set_stats:
+       data:
+        caso_de_uso: 02
+
+  
+
+  # - name: Add new instance to host group
+  #   add_host: 
+  #      hostname: '{{ item.ipv4 }}' 
+  #      groups: invtemp
+  #   with_items:
+  #      - "{{ deploy_vm.instance }}"
+    
+
+ #  - name: Wait for SSH to come up
+ #    wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+ #    with_items: "{{ ec2.instances }}"
+
