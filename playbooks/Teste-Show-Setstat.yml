@@ -9,7 +9,7 @@
 
     - name: Add new instance to host group
       yum: 
-        name:  pacote
+        name:  "{{pacote}}"
         state: latest
  
          
@@ -24,33 +24,3 @@
  #     become: yes
  #     become_method: sudo 
   
-
-     
-
-- name: PLAY 02 
-  hosts: linux_launched
-  gather_facts: True
-   
-
-  tasks: 
-
-    - name: Registro usando usuario e senha no RHSM 
-      redhat_subscription:
-             state: present
-             username: "{{ user_nome }}"
-             password: "{{ user_senha }}"
-             auto_attach: true
-             pool_ids:
-                 - 8a85f98260c27fc50160c32cc4365ccb 
-
-    - name:  Disable all RHSM repositories
-      rhsm_repository:
-           name: '*'
-           state: disabled
-           ignore_errors: true
-
-    - name: Enable repository rhel-7-server-rpms
-      rhsm_repository:
-           name: rhel-7-server-rpms
-      
-
