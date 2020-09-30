@@ -1,7 +1,7 @@
 ---
 -
    name: WorkFlow - Registra RHSM  
-   hosts: localhost 
+   hosts: all 
    vars: 
       #user_nome: brolivei@redhat.com
       #user_senha: 
