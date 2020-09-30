@@ -1,0 +1,20 @@
+
+---
+-
+   name: Teste Set stats 
+   hosts: 192.168.0.205 
+   vars: 
+
+   tasks: 
+  
+
+ 
+
+   - name: Set fact for subsequent job templates
+     set_stats:
+       data:
+        pacote: httpd 
+
+  
+
+  
