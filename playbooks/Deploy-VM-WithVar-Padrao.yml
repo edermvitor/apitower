@@ -67,18 +67,24 @@
    - name: leitura de variavel direta - 1 ok
      debug: 
         msg: 
-        - saida1 direta  "{{deploy_vm.instance.hw_name}}" 
+        - saida1 direta  "{{deploy_vm.instance.ipv4}}" 
      ignore_errors: true 
 
-   - name: seta status 
+   - name: set var ipv4 
      set_stats:
-       data:
-         vmware_instances: 
-              - '{{ item.ipv4 }}'
-       per_host: yes  
-     with_items: 
-        -  '{{ deploy_vm.instance }}' 
-     ignore_errors: true 
+      data: 
+        ip_vmware_instances: "{{deploy_vm.instance.ipv4}}"
+     ignore_errors: true
+
+  # - name: seta status 
+  #   set_stats:
+  #     data:
+  #       vmware_instances: 
+  #            - '{{ item.ipv4 }}'
+  #     per_host: yes  
+  #   with_items: 
+  #      -  '{{ deploy_vm.instance }}' 
+  #   ignore_errors: true 
 
    - name: Set fact for subsequent job templates
      set_stats:
@@ -87,12 +93,12 @@
 
   
 
-   - name: Add new instance to host group
-     add_host: 
-        hostname: '{{ item.ipv4 }}' 
-        groups: invtemp
-     with_items:
-        - "{{ deploy_vm.instance }}"
+  # - name: Add new instance to host group
+  #   add_host: 
+  #      hostname: '{{ item.ipv4 }}' 
+  #      groups: invtemp
+  #   with_items:
+  #      - "{{ deploy_vm.instance }}"
     
 
  #  - name: Wait for SSH to come up

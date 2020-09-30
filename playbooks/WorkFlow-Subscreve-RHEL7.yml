@@ -9,7 +9,7 @@
 
     - name: Add new instance to host group
       add_host: 
-          hostname:  "{{vmware_instances}}" 
+          hostname:  "{{ip_vmware_instances}}" 
           groupname: linux_launched
  
          
