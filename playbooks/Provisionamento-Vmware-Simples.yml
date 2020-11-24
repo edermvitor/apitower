@@ -16,7 +16,8 @@
         folder: /ansiblevms
         state: poweredon
         guest_id: rhel7_64Guest
-        name: pelada.labs.corp
+        name: "{{ vm_name }}"
+        template: "t-rhel78"
     # This is hostname of particular ESXi server on which user wants VM to be deployed
         esxi_hostname: esx01.labs.corp
         disk:
@@ -24,15 +25,40 @@
           type: thin
           datastore: datastore1
         hardware:
-          memory_mb: 512
+          memory_mb: "{{ memory_size }}"
           num_cpus: 2
           scsi: paravirtual
         networks:
         - name: VM Network
           mac: aa:bb:dd:aa:00:14
-          ip: 192.168.0.51
+          ip: "{{ip_address}}"
           netmask: 255.255.255.0
           device_type: vmxnet3
         wait_for_ip_address: yes
      delegate_to: localhost
-     register: deploy_vm      
+     register: deploy_vm   
+     
+   - name: Debug 
+     debug: 
+        msg: 
+        - Saida dos deployment  '{{ deploy_vm }}'  
+
+   - name: debug info + leitura via loop 
+     debug: 
+        msg: 
+        - saida1 '{{item.hw_name}}'
+        - saida2 '{{item.ipv4}}' 
+     with_items:
+        - "{{ deploy_vm.instance }}" 
+
+   - name: leitura de variavel direta - 1 ok
+     debug: 
+        msg: 
+        - saida1 direta  "{{deploy_vm.instance.ipv4}}" 
+     ignore_errors: true 
+
+   - name: set var ipv4 
+     set_stats:
+      data: 
+        ip_vmware_instances: "{{deploy_vm.instance.ipv4}}"
+     ignore_errors: true
