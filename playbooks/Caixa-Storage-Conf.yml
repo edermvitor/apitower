@@ -20,7 +20,7 @@
             path: "{{ item }}"
             state: directory 
             recurse: yes 
-            mopde: '0776'
+            mode: '0776'
         loop: 
            - /Caixa
            - /Caixa/App
