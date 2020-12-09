@@ -20,7 +20,7 @@
             path: "{{ item }}"
             state: directory 
             recurse: yes 
-            mode: '0776'
+            mode: '0744'
         loop: 
            - /Caixa
            - /Caixa/App
@@ -63,7 +63,7 @@
         - name: mount_lv_app
           mount: 
            path: /Caixa/App
-           src: /dev/mapper/vg.caixa/lv_app
+           src: /dev/mapper/vg.caixa-lv_app
            fstype: xfs 
            state: present 
            opts: rw,auto
