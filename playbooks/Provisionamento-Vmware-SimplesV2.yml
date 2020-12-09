@@ -30,10 +30,17 @@
           scsi: paravirtual
         networks:
         - name: VM Network
-          mac: aa:bb:dd:aa:00:14
+          #mac: aa:bb:dd:aa:00:14
           ip: "{{ip_address}}"
           netmask: 255.255.255.0
+          gateway: 192.168.0.10
           device_type: vmxnet3
+          domain: labs.corp
+          dns_servers: 192.168.0.220
+        customization:
+          autologon: yes 
+          dns_server: 192.168.0.220
+          domain: labs.corp
         wait_for_ip_address: yes
      delegate_to: localhost
      register: deploy_vm   
