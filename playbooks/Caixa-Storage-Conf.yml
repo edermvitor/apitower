@@ -67,3 +67,6 @@
            fstype: xfs 
            state: present 
            opts: rw,auto
+          tags: 
+            - mount_lv_app
+
