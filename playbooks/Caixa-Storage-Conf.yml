@@ -42,11 +42,17 @@
            make_lv_app
 
     
-      - name: Criando Logical Voluime lv_log
+      - name: Criando Logical Volume lv_log
         lvol: 
           vg: vg.caixa 
           lv: lv_log
           size: 5g
+        notify:
+        - format_lv_log
+        - mount_lv_log
+        tags:
+           make_lv_log
+  
 
       - name: Criando Logical Volume  lv_infra 
         lvol: 
@@ -74,4 +80,18 @@
            src: /dev/mapper/vg.caixa-lv_app
            fstype: xfs 
            state: mounted
+
+        - name: format_lv_log
+          filesystem:
+                fstype: xfs
+                dev: /dev/mapper/vg.caixa-lv_log
+                opts: -f
+
+        - name: mount_lv_log
+          mount:
+           path: /Caixa/Log
+           src: /dev/mapper/vg.caixa-lv_log
+           fstype: xfs
+           state: mounted
+    
 
