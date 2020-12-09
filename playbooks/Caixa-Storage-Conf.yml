@@ -66,7 +66,8 @@
            src: /dev/mapper/vg.caixa-lv_app
            fstype: xfs 
            state: present 
-           opts: rw,auto
+           opts: defaults
+           state: mounted
           tags: 
             - mount_lv_app
 
