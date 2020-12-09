@@ -21,7 +21,7 @@
     # This is hostname of particular ESXi server on which user wants VM to be deployed
         esxi_hostname: esx01.labs.corp
         disk:
-        - size_gb: 15
+        - size_gb: 50
           type: thin
           datastore: datastore1
         hardware:
