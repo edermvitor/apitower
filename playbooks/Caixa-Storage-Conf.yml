@@ -2,7 +2,7 @@
 -
 
     name: Configura VM  
-    hosts: localhost 
+    hosts: all
 
     tasks: 
 
