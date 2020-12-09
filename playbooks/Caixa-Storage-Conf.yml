@@ -1,0 +1,69 @@
+---
+-
+
+    name: Configura VM  
+    hosts: localhost 
+
+    tasks: 
+
+      - name: Criando Volume Group 
+        lvg: 
+          vg: vg.caixa
+          pvs: /dev/sdb
+          state: present 
+          force: yes 
+        tags: 
+           create_volume_group   
+
+      - name: create folder caixa app 
+        file: 
+            path: "{{ item.folder }}"
+            state: directory 
+            recurse: yes 
+            mopde: '0776'
+        with_items: 
+             - /Caixa
+             - /Caixa/App
+             - /Caixa/Log
+             - /Infra 
+             - /Infra/Backup 
+        tags: 
+           create_folder
+
+      - name: Criando Logical Volume lv_app
+        lvol: 
+          vg: vg.caixa 
+          lv: lv_app 
+          size: 10g 
+        notify: 
+        - mount_lv_app
+          #  tags: 
+          # make_lv_app
+
+    
+      - name: Criando Logical Voluime lv_log
+        lvol: 
+          vg: vg.caixa 
+          lv: lv_log
+          size: 5g
+
+      - name: Criando Logical Volume  lv_infra 
+        lvol: 
+          vg: vg.caixa 
+          lv: lv_infra 
+          size: 5g    
+
+      - name: Criando Logical Volume  lv_backup
+        lvol: 
+          vg: vg.caixa 
+          lv: lv_backup
+          size: 7g        
+
+    handlers: 
+        - name: mount_lvm_app    
+          mount: 
+           path: /Caixa/App
+           src: /dev/mapper/vg.caixa/lv_app
+           fstype: xfs 
+           state: present 
+           opts: rw,auto
