@@ -58,13 +58,24 @@
         lvol: 
           vg: vg.caixa 
           lv: lv_infra 
-          size: 5g    
+          size: 5g   
+        notify:
+        - format_lv_infra
+        - mount_lv_infra
+        tags:
+           make_lv_infra
 
       - name: Criando Logical Volume  lv_backup
         lvol: 
           vg: vg.caixa 
           lv: lv_backup
           size: 7g        
+        notify:
+        - format_lv_backup
+        - mount_lv_backup
+        tags:
+           make_lv_backup
+   
 
     handlers: 
 
@@ -93,5 +104,30 @@
            src: /dev/mapper/vg.caixa-lv_log
            fstype: xfs
            state: mounted
+
+        - name: format_lv_infra
+          filesystem:
+                fstype: xfs
+                dev: /dev/mapper/vg.caixa-lv_infra
+                opts: -f
+
+        - name: mount_lv_infra
+          mount:
+           path: /Infra
+           src: /dev/mapper/vg.caixa-lv_infra
+           fstype: xfs
+           state: mounted
     
+        - name: format_lv_backup
+          filesystem:
+                fstype: xfs
+                dev: /dev/mapper/vg.caixa-lv_backup
+                opts: -f
+
+        - name: mount_lv_backup
+          mount:
+           path: /Infra/Backup
+           src: /dev/mapper/vg.caixa-lv_backup
+           fstype: xfs
+           state: mounted
 
