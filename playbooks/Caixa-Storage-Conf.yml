@@ -36,6 +36,7 @@
           lv: lv_app 
           size: 10g 
         notify: 
+        - format_lv_app
         - mount_lv_app
         tags: 
            make_lv_app
@@ -60,12 +61,17 @@
           size: 7g        
 
     handlers: 
+
+        - name: format_lv_app
+          filesystem: 
+                fstype: xfs 
+                dev: /dev/mapper/vg.caixa-lv_app
+                opts: -f 
+
         - name: mount_lv_app
           mount: 
            path: /Caixa/App
            src: /dev/mapper/vg.caixa-lv_app
            fstype: xfs 
            state: mounted
-          tags: 
-            - mount_lv_app
 
