@@ -60,7 +60,7 @@
           size: 7g        
 
     handlers: 
-        - name: mount_lvm_app    
+        - name: mount_lv_app
           mount: 
            path: /Caixa/App
            src: /dev/mapper/vg.caixa/lv_app
