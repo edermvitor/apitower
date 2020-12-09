@@ -17,16 +17,16 @@
 
       - name: create folder caixa app 
         file: 
-            path: "{{ item.folder }}"
+            path: "{{ item }}"
             state: directory 
             recurse: yes 
             mopde: '0776'
-        with_items: 
-             - /Caixa
-             - /Caixa/App
-             - /Caixa/Log
-             - /Infra 
-             - /Infra/Backup 
+        loop: 
+           - /Caixa
+           - /Caixa/App
+           - /Caixa/Log
+           - /Infra 
+           - /Infra/Backup 
         tags: 
            create_folder
 
