@@ -1,0 +1,29 @@
+---
+-
+
+    name: Adiciona disco VMWARE 
+    hosts: localhost 
+
+    tasks: 
+    
+    #/ansible
+
+    - name: ADD Disk {{ vm_name }}
+      vmware_guest_disk:
+        datacenter: DTC01
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        folder: "{{ vm_folder }}"
+        name: "{{ vm_name }}"         
+        disk:
+          - size_gb: "{{ disk_size }}"
+            type: thin
+            datastore: "{{ vm_datastore }}"
+            state: present
+            scsi_controller: 1 
+            unit_number: 1
+            scsi_type: paravirtual 
+      delegate_to: localhost 
+      register: disk_facts  
