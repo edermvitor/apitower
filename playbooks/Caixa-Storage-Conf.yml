@@ -37,8 +37,8 @@
           size: 10g 
         notify: 
         - mount_lv_app
-          #  tags: 
-          # make_lv_app
+        tags: 
+           make_lv_app
 
     
       - name: Criando Logical Voluime lv_log
